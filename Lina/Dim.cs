@@ -1,4 +1,2 @@
 ﻿
-public record Dim(uint N);
-
-public record Dim2() : Dim(2);
+public record Dim(uint Count);
