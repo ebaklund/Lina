@@ -26,6 +26,37 @@ namespace Lina
         {
             return _data;
         }
+
+        bool operator==(const Mtx<T, R, C>& m2) const {
+            const T* p1 = this->_data.data();
+            const T* p2 = m2._data.data();
+            const T* p1_end = p1 + R*C;
+
+            while (p1 < p1_end)
+            {
+                if (*(p1++) != *(p2++))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        std::unique_ptr<Mtx<T, R, C>> operator+(const Mtx<T, R, C>& m2) const {
+            auto m3 = std::make_unique<Mtx<T, R, C>>();
+            const T* p1 = this->_data.data();
+            const T* p2 = m2._data.data();
+            T* p3 = m3->_data.data();
+            const T* p1_end = p1 + R * C;
+
+            while (p1 < p1_end)
+            {
+                *(p3++) = *(p1++) + *(p2++);
+            }
+
+            return m3;
+        }
     };
 
     template <typename U, std::uint32_t S>
