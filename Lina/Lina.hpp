@@ -10,17 +10,14 @@ namespace Lina
     class Mtx
     {
     private:
-        std::unique_ptr<std::array<T, R*C>> _data;
+        std::unique_ptr<std::array<T, R*C>> _data = std::make_unique<std::array<T, R* C>>();
 
     public:
         Mtx()
-        {
-            _data = std::make_unique<std::array<T, R*C>>();
-        }
+        { }
 
         Mtx(std::array<T, R*C> const data) 
-        {
-            _data = std::make_unique<std::array<T, R * C>>();
+        {            
             T* p1 = _data->data();
             T const* p1_end = p1 + R*C;
             T const* p2 = data.data();
@@ -35,53 +32,56 @@ namespace Lina
         {
             return *_data;
         }
-
-        bool operator==(Mtx<T, R, C> const& m2) const {
-            const T* p1 = this->_data->data();
-            const T* p2 = m2._data->data();
-            const T* p1_end = p1 + R*C;
-
-            while (p1 < p1_end)
-            {
-                if (*(p1++) != *(p2++))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        Mtx<T, R, C> operator+(const Mtx<T, R, C>& m2) const {
-            Mtx<T, R, C> m3;
-            const T* p1 = this->_data->data();
-            const T* p2 = m2._data->data();
-            T* p3 = m3._data->data();
-            const T* p1_end = p1 + R * C;
-
-            while (p1 < p1_end)
-            {
-                *(p3++) = *(p1++) + *(p2++);
-            }
-
-            return m3;
-        }
-
-        Mtx<T, R, C> operator-(const Mtx<T, R, C>& m2) const {
-            Mtx<T, R, C> m3;
-            const T* p1 = this->_data->data();
-            const T* p2 = m2._data->data();
-            T* p3 = m3._data->data();
-            const T* p1_end = p1 + R * C;
-
-            while (p1 < p1_end)
-            {
-                *(p3++) = *(p1++) - *(p2++);
-            }
-
-            return m3;
-        }
     };
+
+    template <typename T, std::uint32_t R, std::uint32_t C>
+    bool operator==(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+        const T* p1 = m1.data().data();
+        const T* p2 = m2.data().data();
+        const T* p1_end = p1 + R * C;
+
+        while (p1 < p1_end)
+        {
+            if (*(p1++) != *(p2++))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    template <typename T, std::uint32_t R, std::uint32_t C>
+    Mtx<T, R, C> operator+(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+        Mtx<T, R, C> m3;
+        const T* p1 = m1.data().data();
+        const T* p2 = m2.data().data();
+        T* p3 = (T*)m3.data().data();
+        const T* p1_end = p1 + R * C;
+
+        while (p1 < p1_end)
+        {
+            *(p3++) = *(p1++) + *(p2++);
+        }
+
+        return m3;
+    }
+
+    template <typename T, std::uint32_t R, std::uint32_t C>
+    Mtx<T, R, C> operator-(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+        Mtx<T, R, C> m3;
+        const T* p1 = m1.data().data();
+        const T* p2 = m2.data().data();
+        T* p3 = (T*)m3.data().data();
+        const T* p1_end = p1 + R * C;
+
+        while (p1 < p1_end)
+        {
+            *(p3++) = *(p1++) - *(p2++);
+        }
+
+        return m3;
+    }
 
     template <typename U, std::uint32_t S>
     U dot(std::array<U, S> const& a1, std::array<U, S> const& a2)
