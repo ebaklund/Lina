@@ -19,7 +19,7 @@ namespace LinaTests
             Mtx<float, 1, 3> C ({ 7.f, -8.f, -9.f });
             
             Assert::AreEqual(dot(A, B), 0.f);
-            Assert::AreEqual(dot(B, *t(C)), 50.f);
+            Assert::AreEqual(dot(B, t(C)), 50.f);
         }
 
         TEST_METHOD(MO_1_2)
@@ -37,8 +37,8 @@ namespace LinaTests
                 8.f, -4.f
             });
 
-            Assert::AreEqual(*(A + B) == C, true);
-            Assert::AreEqual(*(B + A) == C, true);
+            Assert::AreEqual((A + B) == C, true);
+            Assert::AreEqual((B + A) == C, true);
         }
 
         TEST_METHOD(MO_1_3)
@@ -56,7 +56,7 @@ namespace LinaTests
                 3.0f, 12.5f
             });
 
-            Assert::AreEqual(*(*(3.0f * A) - *(0.5f * B)) == C, true);
+            Assert::AreEqual(3.0f * A - 0.5f * B == C, true);
         }
     };
 }
