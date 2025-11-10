@@ -17,12 +17,12 @@ namespace Lina
         {
         }
 
-        Mtx(std::array<T, R*C> data)
+        Mtx(std::array<T, R*C> data) 
         {
             _data = data;
         }
 
-        std::array<T, R*C>& data()
+        std::array<T, R*C> const& data() const
         {
             return _data;
         }
@@ -57,15 +57,30 @@ namespace Lina
 
             return m3;
         }
+
+        std::unique_ptr<Mtx<T, R, C>> operator-(const Mtx<T, R, C>& m2) const {
+            auto m3 = std::make_unique<Mtx<T, R, C>>();
+            const T* p1 = this->_data.data();
+            const T* p2 = m2._data.data();
+            T* p3 = m3->_data.data();
+            const T* p1_end = p1 + R * C;
+
+            while (p1 < p1_end)
+            {
+                *(p3++) = *(p1++) - *(p2++);
+            }
+
+            return m3;
+        }
     };
 
     template <typename U, std::uint32_t S>
-    U dot(std::array<U, S>& a1, std::array<U, S>& a2)
+    U dot(std::array<U, S> const& a1, std::array<U, S> const& a2)
     {
         U d = U(0);
-        U* p1_end = a1.data() + S;
-        U* p1 = a1.data();
-        U* p2 = a2.data();
+        U const* p1_end = a1.data() + S;
+        U const* p1 = a1.data();
+        U const* p2 = a2.data();
 
         while (p1 < p1_end)
         {
@@ -91,13 +106,13 @@ namespace Lina
     std::unique_ptr<Mtx<T, C, R>> t(Mtx<T, R, C>& m1)
     {
         auto mt = std::make_unique<Mtx<T, C, R>>();
-        T* p1 = m1.data().data();
-        T* pt0 = mt->data().data();
+        T const* p1 = m1.data().data();
+        T* pt0 = (T*)mt->data().data();
 
         for (std::uint32_t r = 0; r < R; r++)
         {
             T* pt = pt0 + r * C;
-            for (T* p1_end = p1 + C; p1 < p1_end; p1++)
+            for (T const* p1_end = p1 + C; p1 < p1_end; p1++)
             {
                 *pt = *p1;
                 pt += R;
@@ -105,5 +120,20 @@ namespace Lina
         }
 
         return mt;
+    }
+
+    template <typename T, std::uint32_t R, std::uint32_t C>
+    std::unique_ptr<Mtx<T, R, C>> operator*(T f, const Mtx<T, R, C>& m2) {
+        auto m3 = std::make_unique<Mtx<T, R, C>>();
+        const T* p2 = m2.data().data();
+        T* p3 = (T*)m3->data().data();
+        const T* p2_end = p2 + R * C;
+
+        while (p2 < p2_end)
+        {
+            *(p3++) = f * *(p2++);
+        }
+
+        return m3;
     }
 }
