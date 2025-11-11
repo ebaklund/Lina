@@ -112,18 +112,21 @@ namespace Lina
     }
 
     template <typename T, std::uint32_t R, std::uint32_t C>
-    Mtx<T, C, R> t(Mtx<T, R, C>& m1)
+    Mtx<T, C, R> t(const Mtx<T, R, C>& m1)
     {
         Mtx<T, C, R> mt;
-        T const* p1 = m1.data().data();
-        T* pt0 = (T*)mt.data().data();
+        const T* p1 = m1.data().data();
+        T* ptc = (T*)mt.data().data();
+        T* ptc_end = ptc + R;
 
-        for (std::uint32_t r = 0; r < R; r++)
+        while (ptc < ptc_end)
         {
-            T* pt = pt0 + r * C;
-            for (T const* p1_end = p1 + C; p1 < p1_end; p1++)
+            T* pt = ptc++;
+            const T* p1c_end = p1 + C;
+            
+            while(p1 < p1c_end)
             {
-                *pt = *p1;
+                *pt = *(p1++);
                 pt += R;
             }
         }
@@ -141,6 +144,31 @@ namespace Lina
         while (p2 < p2_end)
         {
             *(p3++) = f * *(p2++);
+        }
+
+        return m3;
+    }
+
+    template <typename T, std::uint32_t R1, std::uint32_t D, std::uint32_t C2>
+    Mtx<T, R1, C2> operator*(Mtx<T, R1, D> const& m1, Mtx<T, D, C2> const& m2) {
+        Mtx<T, C2, D> mt = t(m2);
+        Mtx<T, R1, C2> m3;
+        
+        const T* p1_begin = m1.data().data();
+        const T* pt_begin = mt.data().data();
+        T* p3 = (T*)m3.data().data();
+
+        for (uint32_t i3 = 0; i3 < (R1 * C2); i3++, p3++)
+        {            
+            *p3 = T(0);
+            const T* p1 = p1_begin + D * (i3 / C2);
+            const T* pt = pt_begin + D * (i3 % C2);
+            const T* pt_d = pt + D;
+
+            while (pt < pt_d)
+            {
+                *p3 += *(p1++) * *(pt++);
+            }
         }
 
         return m3;
