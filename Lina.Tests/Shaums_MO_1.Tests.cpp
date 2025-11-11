@@ -117,5 +117,25 @@ namespace LinaTests
             // Assert::AreEqual(A * B == C, true);
             Assert::AreEqual(B * A == C, true);
         }
+
+        TEST_METHOD(MO_1_6)
+        {
+            Mtx<float, 2, 3> A({
+                1.f,   2.f, 3.f,
+                4.f,  -5.f, 6.f
+                });
+            Mtx<float, 2, 2> B({
+                7.f,   8.f,
+                0.f,  -9.f
+                });
+            Mtx<float, 2, 3> C({
+                 39.f, -26.f,  69.f,
+                -36.f,  45.f, -54.f
+                });
+
+            Assert::AreEqual(t(B * A) == t(A) * t(B), true);
+            Assert::AreEqual(t(B * A) == t(C), true);
+            Assert::AreEqual(t(A) * t(B) == t(C), true);
+        }
     };
 }
