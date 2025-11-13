@@ -6,7 +6,7 @@
 
 namespace Lina
 {
-    template <typename T, std::uint32_t R, std::uint32_t C>
+    template <typename T, uint32_t R, uint32_t C>
     class Mtx
     {
     private:
@@ -32,10 +32,34 @@ namespace Lina
         {
             return *_data;
         }
+
+        template <uint32_t TL, uint32_t BL, uint32_t LL, uint32_t RL, uint32_t H = BL - TL, uint32_t W = RL - LL>
+        Mtx<T, H, W> part()
+        {
+            Mtx<T, H, W> res;
+            T* p = (T*)res.data().data();
+            const T* p_end = p + H * W;
+            const T* p1 = _data->data() + TL * C + LL;
+
+            while (p < p_end)
+            {
+                const T* p1_end = p1 + W;
+
+                while (p1 < p1_end)
+                {
+                    *(p++) = *(p1++);
+                }
+
+                p1 += (C - W);
+            }
+
+            return res;
+        }
     };
 
-    template <typename T, std::uint32_t R, std::uint32_t C>
-    bool operator==(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+    template <typename T, uint32_t R, uint32_t C>
+    bool operator==(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2)
+    {
         const T* p1 = m1.data().data();
         const T* p2 = m2.data().data();
         const T* p1_end = p1 + R * C;
@@ -51,8 +75,9 @@ namespace Lina
         return true;
     }
 
-    template <typename T, std::uint32_t R, std::uint32_t C>
-    Mtx<T, R, C> operator+(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, R, C> operator+(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2)
+    {
         Mtx<T, R, C> m3;
         const T* p1 = m1.data().data();
         const T* p2 = m2.data().data();
@@ -67,8 +92,9 @@ namespace Lina
         return m3;
     }
 
-    template <typename T, std::uint32_t R, std::uint32_t C>
-    Mtx<T, R, C> operator-(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2) {
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, R, C> operator-(Mtx<T, R, C> const& m1, Mtx<T, R, C> const& m2)
+    {
         Mtx<T, R, C> m3;
         const T* p1 = m1.data().data();
         const T* p2 = m2.data().data();
@@ -83,7 +109,7 @@ namespace Lina
         return m3;
     }
 
-    template <typename U, std::uint32_t S>
+    template <typename U, uint32_t S>
     U dot(std::array<U, S> const& a1, std::array<U, S> const& a2)
     {
         U d = U(0);
@@ -99,19 +125,19 @@ namespace Lina
         return d;
     }
 
-    template <typename T, std::uint32_t C>
+    template <typename T, uint32_t C>
     T dot(Mtx<T, 1, C> const& m1, Mtx<T, 1, C> const& m2)
     {
         return dot(m1.data(), m2.data());
     }
 
-    template <typename T, std::uint32_t R>
+    template <typename T, uint32_t R>
     T dot(Mtx<T, R, 1> const& m1, Mtx<T, R, 1> const& m2)
     {
         return dot(m1.data(), m2.data());
     }
 
-    template <typename T, std::uint32_t R, std::uint32_t C>
+    template <typename T, uint32_t R, uint32_t C>
     Mtx<T, C, R> t(const Mtx<T, R, C>& m1)
     {
         Mtx<T, C, R> mt;
@@ -134,8 +160,9 @@ namespace Lina
         return mt;
     }
 
-    template <typename T, std::uint32_t R, std::uint32_t C>
-    Mtx<T, R, C> operator*(T f, Mtx<T, R, C> const& m2) {
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, R, C> operator*(T f, Mtx<T, R, C> const& m2)
+    {
         Mtx<T, R, C> m3;
         const T* p2 = m2.data().data();
         T* p3 = (T*)m3.data().data();
@@ -149,8 +176,9 @@ namespace Lina
         return m3;
     }
 
-    template <typename T, std::uint32_t R1, std::uint32_t D, std::uint32_t C2>
-    Mtx<T, R1, C2> operator*(Mtx<T, R1, D> const& m1, Mtx<T, D, C2> const& m2) {
+    template <typename T, uint32_t R1, uint32_t D, uint32_t C2>
+    Mtx<T, R1, C2> operator*(Mtx<T, R1, D> const& m1, Mtx<T, D, C2> const& m2)
+    {
         Mtx<T, C2, D> mt = t(m2);
         Mtx<T, R1, C2> m3;
         
