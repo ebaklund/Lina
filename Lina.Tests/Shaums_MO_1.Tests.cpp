@@ -205,5 +205,50 @@ namespace LinaTests
             Assert::AreEqual(A.part<0, 3, 0, 3>() == G, true);
             Assert::AreEqual(A.part<0, 3, 3, 4>() == H, true);
         }
+
+        TEST_METHOD(MO_1_9)
+        {
+            Mtx<float, 2, 2> C({
+                1.f,  2.f,
+                3.f,  4.f,
+            });
+            Mtx<float, 2, 2> D({
+                0.f,  0.f,
+                0.f,  0.f,
+            });
+            Mtx<float, 2, 2> E({
+                5.f,  6.f,
+                7.f,  8.f,
+            });
+            Mtx<float, 2, 2> F({
+               -1.f,  0.f,
+                2.f,  1.f,
+            });
+            Mtx<float, 2, 2> G({
+               -2.f, -3.f,
+                1.f,  1.f,
+            });
+           Mtx<float, 4, 4> Q1 ({
+                 3.f,  2.f,  0.f, -1.f,
+                 5.f,  4.f, -2.f, -5.f,
+                10.f,  8.f, 15.f, 13.f,
+                14.f, 12.f, 37.f, 37.f
+            });
+            Mtx<float, 4, 4> Q2({
+                 2.f,  2.f,  2.f,  3.f,
+                 1.f,  3.f, -1.f, -1.f,
+                 6.f,  6.f, -4.f, -4.f,
+                 5.f,  7.f, -4.f, -4.f
+            });
+            Mtx<float, 4, 4> A = vcon(hcon(C, D), hcon(E, C));
+            Mtx<float, 4, 4> B = vcon(hcon(F, G), hcon(F, E));
+
+            Logger::WriteMessage((A * B).to_string("AB").c_str());
+            Logger::WriteMessage((Q1).to_string("Q1").c_str());
+            Logger::WriteMessage((A - B).to_string("A-B").c_str());
+            Logger::WriteMessage((Q2).to_string("Q2").c_str());
+            Assert::AreEqual(A * B == Q1, true);
+            Assert::AreEqual(A - B == Q2, true);
+        }
     };
 }

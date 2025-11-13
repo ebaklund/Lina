@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <array>
 #include <memory>
+#include <format>
 
 namespace Lina
 {
@@ -31,6 +32,31 @@ namespace Lina
         std::array<T, R*C> const& data() const
         {
             return *_data;
+        }
+
+        std::string to_string(std::string name) const
+        {
+            const T* p = _data->data();
+            const T* p_end = p +  R * C;
+            std::string s;
+            s += name;
+            s += ": [\n";
+
+            while (p < p_end)
+            {
+                s += "  ";
+                auto p_eol = p + C;
+
+                while (p < p_eol)
+                {
+                    s += std::format("{:5.2f}, ", *(p++));
+                }
+
+                s += "\n";
+            }
+
+            s += "]\n";
+            return s;
         }
 
         template <uint32_t TL, uint32_t BL, uint32_t LL, uint32_t RL, uint32_t H = BL - TL, uint32_t W = RL - LL>
@@ -200,5 +226,51 @@ namespace Lina
         }
 
         return m3;
+    }
+
+    template <typename T, uint32_t R, uint32_t C1, uint32_t C2, uint32_t C = C1 + C2>
+    Mtx<T, R, C> hcon(Mtx<T, R, C1> const& m1, Mtx<T, R, C2> const& m2)
+    {
+        Mtx<T, R, C> m;
+        T* p = (T*)m.data().data();
+        const T* p_end = p + R * C;
+        const T* p1 = m1.data().data();
+        const T* p2 = m2.data().data();
+
+        while (p < p_end)
+        {            
+            for (const T* p_eol = p + C1; p < p_eol;)
+            {
+                *(p++) = *(p1++);
+            }
+           
+            for (const T* p_eol = p + C2; p < p_eol;)
+            {
+                *(p++) = *(p2++);
+            }
+        }
+
+        return m;
+    }
+
+    template <typename T, uint32_t R1, uint32_t R2, uint32_t C, uint32_t R = R1 + R2>
+    Mtx<T, R, C> vcon(Mtx<T, R1, C> const& m1, Mtx<T, R2, C> const& m2)
+    {
+        Mtx<T, R, C> m;
+        T* p = (T*)m.data().data();
+        const T* p1 = m1.data().data();
+        const T* p2 = m2.data().data();
+        
+        for (const T* p_end = p + R1 * C; p < p_end;)
+        {
+            *(p++) = *(p1++);
+        }
+
+        for (const T* p_end = p + R2 * C; p < p_end;)
+        {
+            *(p++) = *(p2++);
+        }
+
+        return m;
     }
 }
