@@ -22,8 +22,7 @@ namespace LinaTests
                 3.f, 6.f,
                 4.f, 7.f
             });
-            //Assert::AreEqual(t(t(A)) == A, true);
-            //Assert::AreEqual(t(t(tA)) == tA, true);
+
             Assert::AreEqual(t(A) == tA, true);
         }
 
@@ -240,6 +239,7 @@ namespace LinaTests
                  6.f,  6.f, -4.f, -4.f,
                  5.f,  7.f, -4.f, -4.f
             });
+
             Mtx<float, 4, 4> A = vcon(hcon(C, D), hcon(E, C));
             Mtx<float, 4, 4> B = vcon(hcon(F, G), hcon(F, E));
 
@@ -247,6 +247,7 @@ namespace LinaTests
             Logger::WriteMessage((Q1).to_string("Q1").c_str());
             Logger::WriteMessage((A - B).to_string("A-B").c_str());
             Logger::WriteMessage((Q2).to_string("Q2").c_str());
+
             Assert::AreEqual(A * B == Q1, true);
             Assert::AreEqual(A - B == Q2, true);
         }
