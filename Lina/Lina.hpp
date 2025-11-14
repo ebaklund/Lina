@@ -207,27 +207,59 @@ namespace Lina
     template <typename T, uint32_t R1, uint32_t D, uint32_t C2>
     Mtx<T, R1, C2> operator*(Mtx<T, R1, D> const& m1, Mtx<T, D, C2> const& m2)
     {
+        //Mtx<T, C2, D> mt = t(m2);
+        //Mtx<T, R1, C2> m3;
+        //
+        //const T* p1_begin = m1.data().data();
+        //const T* pt_begin = mt.data().data();
+        //T* p3 = (T*)m3.data().data();
+
+        //for (uint32_t i3 = 0; i3 < (R1 * C2); i3++, p3++)
+        //{            
+        //    *p3 = T(0);
+        //    const T* p1 = p1_begin + D * (i3 / C2);
+        //    const T* pt = pt_begin + D * (i3 % C2);
+        //    const T* pt_d = pt + D;
+
+        //    while (pt < pt_d)
+        //    {
+        //        *p3 += *(p1++) * *(pt++);
+        //    }
+        //}
+
+        //return m3;
+
+
+        Mtx<T, R1, C2> m;
+        const T* p_begin = (T*)m.data().data();
+        const T* p_end = p_begin + R1 * C2;
+
+        const T* p1_bod = m1.data().data();
+        const T* p1_eod = p1_bod + D;
+
         Mtx<T, C2, D> mt = t(m2);
-        Mtx<T, R1, C2> m3;
-        
-        const T* p1_begin = m1.data().data();
         const T* pt_begin = mt.data().data();
-        T* p3 = (T*)m3.data().data();
+        const T* pt_end = pt_begin + C2 * D;
 
-        for (uint32_t i3 = 0; i3 < (R1 * C2); i3++, p3++)
+        for (T* p = (T*)p_begin; p < p_end;)
         {            
-            *p3 = T(0);
-            const T* p1 = p1_begin + D * (i3 / C2);
-            const T* pt = pt_begin + D * (i3 % C2);
-            const T* pt_d = pt + D;
-
-            while (pt < pt_d)
+            for (const T* pt = pt_begin; pt < pt_end;)
             {
-                *p3 += *(p1++) * *(pt++);
+                T v = T(0);
+                
+                for (const T* p1 = p1_bod; p1 < p1_eod;)
+                {
+                    v += *(p1++) * *(pt++);
+                }
+
+                *(p++) = v;
             }
+
+            p1_bod += D;
+            p1_eod += D;
         }
 
-        return m3;
+        return m;
     }
 
     template <typename T, uint32_t R, uint32_t C1, uint32_t C2, uint32_t C = C1 + C2>
