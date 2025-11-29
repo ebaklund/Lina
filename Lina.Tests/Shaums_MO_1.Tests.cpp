@@ -1,5 +1,5 @@
 
-#include "CppUnitTest.h"
+#include <CppUnitTest.h>
 #include "..\Lina\Lina.hpp"
 
 using namespace Lina;

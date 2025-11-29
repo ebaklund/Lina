@@ -4,3 +4,4 @@ bin/
 x64/
 Lina.Tests-cs/
 Lina-cs/
+*.filters
