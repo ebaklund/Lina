@@ -329,5 +329,37 @@ namespace LinaTests
             Assert::AreEqual( Q == q, true);
             Assert::AreEqual(vcon(A, vsum(A)) * hcon(B, hsum(B)) == vcon(hcon(A*B, A*C), hcon(R*B, R*C)), true);
         }
+
+        TEST_METHOD(MO_1_11)
+        {
+            Mtx<float, 3, 4> A({
+                1.f, 3.f, -1.f, 0.f,
+                0.f, 0.f,  1.f, 4.f,
+                0.f, 0.f,  0.f, 0.f,
+            });
+            Mtx<float, 2, 3> B({
+                0.f, 1.f, 4.f,
+                1.f, 2.f, 3.f
+            });
+            Mtx<float, 2, 3> C({
+                0.f, 2.f, 4.f,
+                0.f, 0.f, 1.f,
+            });
+            Mtx<float, 3, 4> D({
+                0.f, 1.f, 0.f, 4.f,
+                0.f, 0.f, 1.f, 3.f,
+                0.f, 0.f, 0.f, 1.f,
+            });
+            Mtx<float, 2, 3> E({
+                1.f, 2.f, 3.f,
+                4.f, 9.f, 7.f,
+            });
+
+            Assert::AreEqual(A.is_resh(), true);
+            Assert::AreEqual(B.is_resh(), false);
+            Assert::AreEqual(C.is_resh(), false);
+            Assert::AreEqual(D.is_resh(), true);
+            Assert::AreEqual(E.is_resh(), false);
+        }
     };
 }
