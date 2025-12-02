@@ -10,11 +10,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Hierachy Of Knowledge.md = Hierachy Of Knowledge.md
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Modal", "Modal\Modal.vcxproj", "{FA8E224A-DBEA-4E61-8925-D24CFF522A92}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Modal.Tests", "Modal.Tests\Modal.Tests.vcxproj", "{06E45C22-9B3B-4AAB-BC24-8346ED986892}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BD", "BD\BD.vcxproj", "{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BD.Tests", "BD.Tests\BD.Tests.vcxproj", "{8F903CDB-DECD-D0AE-560A-293121EC8D74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +61,22 @@ Global
 		{06E45C22-9B3B-4AAB-BC24-8346ED986892}.Release|x64.Build.0 = Release|x64
 		{06E45C22-9B3B-4AAB-BC24-8346ED986892}.Release|x86.ActiveCfg = Release|Win32
 		{06E45C22-9B3B-4AAB-BC24-8346ED986892}.Release|x86.Build.0 = Release|Win32
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Debug|x64.ActiveCfg = Debug|x64
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Debug|x64.Build.0 = Debug|x64
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Debug|x86.ActiveCfg = Debug|Win32
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Debug|x86.Build.0 = Debug|Win32
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Release|x64.ActiveCfg = Release|x64
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Release|x64.Build.0 = Release|x64
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Release|x86.ActiveCfg = Release|Win32
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F}.Release|x86.Build.0 = Release|Win32
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Debug|x64.ActiveCfg = Debug|x64
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Debug|x64.Build.0 = Debug|x64
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Debug|x86.ActiveCfg = Debug|Win32
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Debug|x86.Build.0 = Debug|Win32
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Release|x64.ActiveCfg = Release|x64
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Release|x64.Build.0 = Release|x64
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Release|x86.ActiveCfg = Release|Win32
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
