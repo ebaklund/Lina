@@ -11,7 +11,7 @@ namespace LinaTests
 	TEST_CLASS(LinaTests)
 	{
 	public:
-        TEST_METHOD(MO_1_0)
+        TEST_METHOD(MO_1_00)
         {
             Mtx<float, 2, 3> A({
                 2.f, 3.f, 4.f,
@@ -26,7 +26,7 @@ namespace LinaTests
             Assert::AreEqual(t(A) == tA, true);
         }
 
-		TEST_METHOD(MO_1_1)
+		TEST_METHOD(MO_1_01)
 		{
             Mtx<float, 3, 1> A ({ 2.f,  3.f,  4.f }); 
             Mtx<float, 3, 1> B ({ 5.f,  6.f, -7.f });
@@ -36,7 +36,7 @@ namespace LinaTests
             Assert::AreEqual(dot(B, t(C)), 50.f);
         }
 
-        TEST_METHOD(MO_1_2)
+        TEST_METHOD(MO_1_02)
         {
             Mtx<float, 2, 2> A({
                 0.f,  1.f,
@@ -55,7 +55,7 @@ namespace LinaTests
             Assert::AreEqual((B + A) == C, true);
         }
 
-        TEST_METHOD(MO_1_3)
+        TEST_METHOD(MO_1_03)
         {
             Mtx<float, 2, 2> A({
                 0.f,  1.f,
@@ -73,7 +73,7 @@ namespace LinaTests
             Assert::AreEqual(3.0f * A - 0.5f * B == C, true);
         }
 
-        TEST_METHOD(MO_1_4)
+        TEST_METHOD(MO_1_04)
         {
             Mtx<float, 2, 2> A({
                 0.f,  1.f,
@@ -96,7 +96,7 @@ namespace LinaTests
             Assert::AreEqual(B * A == C2, true);
         }
 
-        TEST_METHOD(MO_1_5)
+        TEST_METHOD(MO_1_05)
         {
             Mtx<float, 2, 3> A({
                 1.f,   2.f, 3.f,
@@ -117,7 +117,7 @@ namespace LinaTests
             Assert::AreEqual(B * A == C, true);
         }
 
-        TEST_METHOD(MO_1_6)
+        TEST_METHOD(MO_1_06)
         {
             Mtx<float, 2, 3> A({
                 1.f,   2.f, 3.f,
@@ -137,7 +137,7 @@ namespace LinaTests
             Assert::AreEqual(t(A) * t(B) == t(C), true);
         }
 
-        TEST_METHOD(MO_1_7)
+        TEST_METHOD(MO_1_07)
         {
             Mtx<float, 3, 3> A({
                  4.f,   2.f, 0.f,
@@ -165,7 +165,7 @@ namespace LinaTests
             Assert::AreEqual(A * C == Y, true);
         }
 
-        TEST_METHOD(MO_1_8)
+        TEST_METHOD(MO_1_08)
         {
             Mtx<float, 3, 4> A({
                 1.f,  2.f,  3.f,  4.f,
@@ -205,40 +205,40 @@ namespace LinaTests
             Assert::AreEqual(A.part<0, 3, 3, 4>() == H, true);
         }
 
-        TEST_METHOD(MO_1_9)
+        TEST_METHOD(MO_1_09)
         {
             Mtx<float, 2, 2> C({
                 1.f,  2.f,
                 3.f,  4.f,
-            });
+                });
             Mtx<float, 2, 2> D({
                 0.f,  0.f,
                 0.f,  0.f,
-            });
+                });
             Mtx<float, 2, 2> E({
                 5.f,  6.f,
                 7.f,  8.f,
-            });
+                });
             Mtx<float, 2, 2> F({
                -1.f,  0.f,
                 2.f,  1.f,
-            });
+                });
             Mtx<float, 2, 2> G({
                -2.f, -3.f,
                 1.f,  1.f,
-            });
-           Mtx<float, 4, 4> Q1 ({
-                 3.f,  2.f,  0.f, -1.f,
-                 5.f,  4.f, -2.f, -5.f,
-                10.f,  8.f, 15.f, 13.f,
-                14.f, 12.f, 37.f, 37.f
-            });
+                });
+            Mtx<float, 4, 4> Q1({
+                  3.f,  2.f,  0.f, -1.f,
+                  5.f,  4.f, -2.f, -5.f,
+                 10.f,  8.f, 15.f, 13.f,
+                 14.f, 12.f, 37.f, 37.f
+                });
             Mtx<float, 4, 4> Q2({
                  2.f,  2.f,  2.f,  3.f,
                  1.f,  3.f, -1.f, -1.f,
                  6.f,  6.f, -4.f, -4.f,
                  5.f,  7.f, -4.f, -4.f
-            });
+                });
 
             Mtx<float, 4, 4> A = vcon(hcon(C, D), hcon(E, C));
             Mtx<float, 4, 4> B = vcon(hcon(F, G), hcon(F, E));
@@ -250,6 +250,84 @@ namespace LinaTests
 
             Assert::AreEqual(A * B == Q1, true);
             Assert::AreEqual(A - B == Q2, true);
+        }
+
+        TEST_METHOD(MO_1_10)
+        {
+            Mtx<float, 2, 2> A({
+                1.f,  3.f,
+                2.f, -1.f,
+            });
+            Mtx<float, 2, 3> B({
+                3.f, -1.f, 1.f,
+                3.f,  2.f, 2.f
+            });
+            Mtx<float, 1, 2> r({
+                3.f,  2.f,
+            });
+            Mtx<float, 2, 1> c({
+               3.f,
+               7.f,
+            });
+            Mtx<float, 3, 2> ar({
+                1.f,  3.f,
+                2.f, -1.f,
+                3.f,  2.f,
+            });
+            Mtx<float, 2, 4> bc({
+                3.f, -1.f, 1.f, 3.f,
+                3.f,  2.f, 2.f, 7.f,
+            });
+            Mtx<float, 3, 4> q({
+               12.f,  5.f,  7.f, 24.f,
+                3.f, -4.f,  0.f, -1.f,
+               15.f,  1.f,  7.f, 23.f,
+            });
+            Mtx<float, 2, 3> ab({
+               12.f,  5.f,  7.f,
+                3.f, -4.f,  0.f,
+            });
+            Mtx<float, 2, 1> ac({
+               24.f,
+               -1.f,
+            });
+            Mtx<float, 1, 3> rb({
+               15.f,  1.f,  7.f,
+            });
+            Mtx<float, 1, 1> rc({
+               23.f,
+            });
+
+
+            Mtx<float, 1, 2> R = vsum(A);
+            Mtx<float, 2, 1> C = hsum(B);
+            Logger::WriteMessage((r).to_string("r").c_str());
+            Logger::WriteMessage((R).to_string("R").c_str());
+
+            Assert::AreEqual(R == r, true);
+            Assert::AreEqual(C == c, true);
+
+            Mtx<float, 3, 2> AR = vcon(A, R);
+            Assert::AreEqual(AR == ar, true);
+
+            Mtx<float, 2, 4> BC = hcon(B, C);
+            Assert::AreEqual(BC == bc, true);
+
+            Mtx<float, 2, 3> AB = A * B;
+            Assert::AreEqual(AB == ab, true);
+
+            Mtx<float, 2, 1> AC = A * C;
+            Assert::AreEqual(AC == ac, true);
+
+            Mtx<float, 1, 3> RB = R * B;
+            Assert::AreEqual(RB == rb, true);
+
+            Mtx<float, 1, 1> RC = R * C;
+            Assert::AreEqual(RC == rc, true);
+
+            Mtx<float, 3, 4> Q = AR * BC;
+            Assert::AreEqual( Q == q, true);
+            Assert::AreEqual(vcon(A, vsum(A)) * hcon(B, hsum(B)) == vcon(hcon(A*B, A*C), hcon(R*B, R*C)), true);
         }
     };
 }

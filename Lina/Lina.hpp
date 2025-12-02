@@ -284,4 +284,52 @@ namespace Lina
 
         return m;
     }
+
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, R, 1> hsum(Mtx<T, R, C> const& m1)
+    {
+        Mtx<T, R, 1> m;
+        T* p = (T*)m.data().data();
+        const T* p_end = p + R;
+        const T* p1 = m1.data().data();
+        const T* p1_eol = p1;
+
+        while (p < p_end)
+        {
+            *p = T(0);
+
+            for (const T* p1_eol = p1 + C; p1 < p1_eol;)
+            {
+                *p += *(p1++);
+            }
+
+            p++;
+        }
+
+        return m;
+    }
+
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, 1, C> vsum(Mtx<T, R, C> const& m1)
+    {
+        Mtx<T, 1, C> m;
+        T* p = (T*)m.data().data();
+        const T* p_end = p + R;
+        const T* p1_bol = m1.data().data();
+        const T* p1_end = p1_bol + R*C;
+
+        while (p < p_end)
+        {
+            *p = T(0);
+
+            for (const T* p1 = (p1_bol++); p1 < p1_end; p1 += C)
+            {
+                *p += *p1;
+            }
+
+            p++;
+        }
+
+        return m;
+    }
 }
