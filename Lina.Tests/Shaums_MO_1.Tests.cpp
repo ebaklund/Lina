@@ -1,6 +1,8 @@
 
 #include <CppUnitTest.h>
+#include <exception>
 #include "..\Lina\Lina.hpp"
+
 
 using namespace Lina;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -355,11 +357,173 @@ namespace LinaTests
                 4.f, 9.f, 7.f,
             });
 
-            Assert::AreEqual(A.is_resh(), true);
-            Assert::AreEqual(B.is_resh(), false);
-            Assert::AreEqual(C.is_resh(), false);
-            Assert::AreEqual(D.is_resh(), true);
-            Assert::AreEqual(E.is_resh(), false);
+                        
+            Assert::AreEqual(Mtx<float, 1, 1> ({
+                0.f
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 1> ({
+                1.f
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 1> ({
+                2.f
+            }).is_rref(), false);
+
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                0.f, 0.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                0.f, 1.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                0.f, 2.f,
+            }).is_rref(), false);
+
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                1.f, 0.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                1.f, 1.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                1.f, 2.f,
+            }).is_rref(), true);
+
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                2.f, 0.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                2.f, 1.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 1, 2> ({
+                2.f, 2.f,
+            }).is_rref(), false);
+
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 0.f,
+                0.f, 0.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 1.f,
+                0.f, 0.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                1.f, 0.f,
+                0.f, 0.f,
+            }).is_rref(), true);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 0.f,
+                0.f, 1.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 0.f,
+                1.f, 0.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 2.f,
+                0.f, 0.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                2.f, 0.f,
+                0.f, 0.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 0.f,
+                0.f, 2.f,
+            }).is_rref(), false);
+            Assert::AreEqual(Mtx<float, 2, 2> ({
+                0.f, 0.f,
+                2.f, 0.f,
+            }).is_rref(), false);
+
+            Assert::AreEqual(A.is_rref(), true);
+            Assert::AreEqual(B.is_rref(), false);
+            Assert::AreEqual(C.is_rref(), false);
+            Assert::AreEqual(D.is_rref(), true);
+            Assert::AreEqual(E.is_rref(), false);
+        }
+
+        TEST_METHOD(MO_1_12)
+        {
+            Mtx<float, 3, 4> A({
+                1.f, 3.f, -1.f, 0.f,
+                0.f, 0.f,  1.f, 4.f,
+                0.f, 0.f,  0.f, 0.f,
+                });
+            Mtx<float, 2, 3> B({
+                0.f, 1.f, 4.f,
+                1.f, 2.f, 3.f
+                });
+            Mtx<float, 2, 3> C({
+                0.f, 2.f, 4.f,
+                0.f, 0.f, 1.f,
+                });
+            Mtx<float, 3, 4> D({
+                0.f, 1.f, 0.f, 4.f,
+                0.f, 0.f, 1.f, 3.f,
+                0.f, 0.f, 0.f, 1.f,
+                });
+            Mtx<float, 2, 3> E({
+                1.f, 2.f, 3.f,
+                4.f, 9.f, 7.f,
+                });
+
+            Assert::AreEqual(rref(Mtx<float, 1, 1> ({
+                0.f
+            })) == Mtx<float, 1, 1> ({
+                0.f
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 1> ({
+                1.f
+            })) == Mtx<float, 1, 1> ({
+                1.f
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 1> ({
+                2.f
+            })) == Mtx<float, 1, 1> ({
+                1.f
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                0.f, 0.f,
+            })) == Mtx<float, 1, 2> ({
+                0.f, 0.f,
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                0.f, 1.f,
+            })) == Mtx<float, 1, 2> ({
+                0.f, 1.f,
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                0.f, 2.f,
+            })) == Mtx<float, 1, 2> ({
+                0.f, 1.f,
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                1.f, 0.f,
+            })) == Mtx<float, 1, 2> ({
+                1.f, 0.f,
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                2.f, 0.f,
+            })) == Mtx<float, 1, 2> ({
+                1.f, 0.f,
+            }), true);
+            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
+                2.f, 1.f,
+            })) == Mtx<float, 1, 2> ({
+                1.f, 0.5f,
+            }), true);
+
+            Assert::AreEqual(A.is_rref(), true);
+            Assert::AreEqual(B.is_rref(), false);
+            Assert::AreEqual(C.is_rref(), false);
+            Assert::AreEqual(D.is_rref(), true);
+            Assert::AreEqual(E.is_rref(), false);
+
+            Assert::AreEqual(rref(A).is_rref(), true);
+            Assert::AreEqual(rref(B).is_rref(), true);
+            Assert::AreEqual(rref(C).is_rref(), true);
+            Assert::AreEqual(rref(D).is_rref(), true);
+            Assert::AreEqual(rref(E).is_rref(), true);
         }
     };
 }
