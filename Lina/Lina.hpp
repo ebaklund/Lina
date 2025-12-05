@@ -5,6 +5,7 @@
 #include <memory>
 #include <format>
 #include "Mtx.hpp"
+#include "RrefMtx.hpp"
 
 namespace Lina
 {

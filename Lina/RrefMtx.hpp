@@ -9,7 +9,7 @@
 namespace Lina
 {
     template <typename T, uint32_t R, uint32_t C>
-    class RrefMtx : Mtx
+    class RrefMtx : Mtx<T, R, C>
     {
     private:
         uint32_t _rank;
