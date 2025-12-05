@@ -138,10 +138,3 @@ namespace Lina
         }
     };
 }
-
-namespace xxx
-{
-    class koko
-    {
-    };
-}
