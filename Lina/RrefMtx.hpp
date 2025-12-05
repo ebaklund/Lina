@@ -10,7 +10,7 @@
 namespace Lina
 {
     template <typename T, uint32_t R, uint32_t C>
-    class RrefMtx : Mtx<T, R, C>
+    class RrefMtx : public Mtx<T, R, C>
     {
     private:
         uint32_t _rank;
@@ -24,7 +24,7 @@ namespace Lina
         RrefMtx()
         { }
 
-        static RrefMtx<T, R, C> From(const Mtx<T, R, C>& m1)
+        static RrefMtx<T, R, C> from(const Mtx<T, R, C>& m1)
         {
             auto data = std::make_unique<std::array<T, R*C>>(m1.data());
             uint32_t rank = apply_gje<T,R,C>(*data);
