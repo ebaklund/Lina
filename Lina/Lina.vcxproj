@@ -138,6 +138,7 @@
     <None Include="Lina.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gje.hpp" />
     <ClInclude Include="Mtx.hpp" />
     <ClInclude Include="RrefMtx.hpp" />
   </ItemGroup>
