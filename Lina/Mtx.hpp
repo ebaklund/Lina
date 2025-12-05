@@ -19,9 +19,9 @@ namespace Lina
             _data = std::make_unique<std::array<T, R* C>>();
         }
 
-        Mtx(std::unique_ptr<std::array<T, R*C>>& data )
+        Mtx(std::unique_ptr<std::array<T, R*C>>& data)
         {
-            _data = data;
+            _data = std::move(data);
         }
 
         Mtx(const std::array<T, R*C>& data) 

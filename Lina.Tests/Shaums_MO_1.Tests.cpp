@@ -525,5 +525,13 @@ namespace LinaTests
             Assert::AreEqual(rref(D).is_rref(), true);
             Assert::AreEqual(rref(E).is_rref(), true);
         }
+        TEST_METHOD(MO_1_13)
+        {
+            Assert::AreEqual(RrefMtx<float, 1, 2>::From(Mtx<float, 1, 2> ({
+                2.f, 1.f,
+            })) == Mtx<float, 1, 2> ({
+                1.f, 0.5f,
+            }), true);
+        }
     };
 }
