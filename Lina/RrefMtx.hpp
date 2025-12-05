@@ -42,4 +42,10 @@ namespace Lina
             return this->data() == m1.data();
         }
     };
+
+    template <typename T, uint32_t R, uint32_t C>
+    RrefMtx<T, R, C> rref(const Mtx<T, R, C>& m1)
+    {
+        return RrefMtx<T, R, C>::from(m1);
+    }
 }
