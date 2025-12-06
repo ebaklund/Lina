@@ -245,11 +245,6 @@ namespace LinaTests
             Mtx<float, 4, 4> A = vcon(hcon(C, D), hcon(E, C));
             Mtx<float, 4, 4> B = vcon(hcon(F, G), hcon(F, E));
 
-            Logger::WriteMessage((A * B).to_string("AB").c_str());
-            Logger::WriteMessage((Q1).to_string("Q1").c_str());
-            Logger::WriteMessage((A - B).to_string("A-B").c_str());
-            Logger::WriteMessage((Q2).to_string("Q2").c_str());
-
             Assert::AreEqual(A * B == Q1, true);
             Assert::AreEqual(A - B == Q2, true);
         }
@@ -303,8 +298,6 @@ namespace LinaTests
 
             Mtx<float, 1, 2> R = vsum(A);
             Mtx<float, 2, 1> C = hsum(B);
-            Logger::WriteMessage((r).to_string("r").c_str());
-            Logger::WriteMessage((R).to_string("R").c_str());
 
             Assert::AreEqual(R == r, true);
             Assert::AreEqual(C == c, true);
@@ -448,24 +441,24 @@ namespace LinaTests
                 1.f, 3.f, -1.f, 0.f,
                 0.f, 0.f,  1.f, 4.f,
                 0.f, 0.f,  0.f, 0.f,
-                });
+            });
             Mtx<float, 2, 3> B({
                 0.f, 1.f, 4.f,
                 1.f, 2.f, 3.f
-                });
+            });
             Mtx<float, 2, 3> C({
                 0.f, 2.f, 4.f,
                 0.f, 0.f, 1.f,
-                });
+            });
             Mtx<float, 3, 4> D({
                 0.f, 1.f, 0.f, 4.f,
                 0.f, 0.f, 1.f, 3.f,
                 0.f, 0.f, 0.f, 1.f,
-                });
+            });
             Mtx<float, 2, 3> E({
                 1.f, 2.f, 3.f,
                 4.f, 9.f, 7.f,
-                });
+             });
 
             Assert::AreEqual(rref(Mtx<float, 1, 1> ({
                 0.f
@@ -527,11 +520,23 @@ namespace LinaTests
         }
         TEST_METHOD(MO_1_13)
         {
-            Assert::AreEqual(rref(Mtx<float, 1, 2> ({
-                2.f, 1.f,
-            })) == Mtx<float, 1, 2> ({
-                1.f, 0.5f,
-            }), true);
+            Mtx<float, 3, 4> A({
+                1.f,  2.f, -1.f,  6.f,
+                3.f,  8.f,  9.f, 10.f,
+                2.f, -1.f,  2.f, -2.f,
+            });
+            Mtx<float, 3, 4> B({
+                1.f,  2.f, -1.f,  6.f,
+                0.f,  1.f,  6.f, -4.f,
+                0.f,  0.f,  1.f, -1.f,
+            });
+            
+            Logger::WriteMessage(A.to_string("A").c_str());
+            Logger::WriteMessage(rref(A).to_string("rref(A)").c_str());
+            Logger::WriteMessage(B.to_string("B").c_str());
+
+            Assert::AreEqual(A == B, false);
+            Assert::AreEqual(rref(A) == B, true);
         }
     };
 }

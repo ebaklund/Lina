@@ -71,6 +71,7 @@ namespace Lina
             const T* pb_end = dp + row_below * C + C;
 
             *(pb++) = T(0);
+            p++;
 
             while (pb < pb_end)
             {
