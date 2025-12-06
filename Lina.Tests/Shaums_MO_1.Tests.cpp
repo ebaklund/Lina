@@ -531,10 +531,6 @@ namespace LinaTests
                 0.f,  0.f,  1.f, -1.f,
             });
             
-            Logger::WriteMessage(A.to_string("A").c_str());
-            Logger::WriteMessage(rref(A).to_string("rref(A)").c_str());
-            Logger::WriteMessage(B.to_string("B").c_str());
-
             Assert::AreEqual(A == B, false);
             Assert::AreEqual(rref(A) == B, true);
         }
@@ -553,6 +549,39 @@ namespace LinaTests
 
             Assert::AreEqual(A == B, false);
             Assert::AreEqual(rref(A) == B, true);
+        }
+        TEST_METHOD(MO_1_15)
+        {
+            Mtx<float, 3, 5> A({
+                3.f,  2.f, 1.f, -4.f,  1.f,
+                2.f,  3.f, 0.f, -1.f, -1.f,
+                1.f, -6.f, 3.f, -8.f,  7.f,
+            });
+            Mtx<float, 3, 5> B({
+                1.f, 2.f/3.f,  1.f/3.f, -4.f/3.f, 1.f/3.f,
+                0.f,     1.f, -2.f/5.f,      1.f,    -1.f,
+                0.f,     0.f,      0.f,      0.f,     0.f,
+            });
+            Mtx<float, 3, 5> C({
+                1.f, 2.f/3.f,  1.f/3.f, -4.f/3.f, 1.f/3.f,
+                0.f,     1.f, -2.f/5.f,      1.f,    -1.f,
+                0.f,     0.f,      0.f,      1.f,    -1.f,
+            });
+
+            // ISSUE:
+            // The book is glossing over rounding issues and thus defining B as the answer.
+            // That does not work out numerically since numeric residues
+            // are seen as non-zero values by GJE. Matrix C, as an answer, takes that into account.
+            // A and C are compared by their string values so that we can omit issues associated with float compare.
+
+            Logger::WriteMessage(A.to_string("A").c_str());
+            Logger::WriteMessage(rref(A).to_string("rref(A)").c_str());
+            Logger::WriteMessage(B.to_string("B").c_str());
+            Logger::WriteMessage(C.to_string("C").c_str());
+
+            Assert::AreEqual(A == B, false);
+            Assert::AreEqual(rref(A) == B, false);
+            Assert::AreEqual(rref(A).to_string("") == C.to_string(""), true);
         }
     };
 }

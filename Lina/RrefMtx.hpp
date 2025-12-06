@@ -28,8 +28,9 @@ namespace Lina
         {
             auto data = std::make_unique<std::array<T, R*C>>(m1.data());
             uint32_t rank = apply_gje<T,R,C>(*data);
+            auto m = RrefMtx<T, R, C>(data, rank);
 
-            return RrefMtx<T, R, C>(data, rank);
+            return m;
         }
 
         uint32_t rank()
