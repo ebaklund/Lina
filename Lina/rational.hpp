@@ -98,6 +98,11 @@ namespace Lina
             return !eq(_n, _d, r2._n, r2._d);
         }
 
+        Rational operator-() const
+        {
+            return Rational(-_n, _d);
+        }
+
         Rational operator+(Rational r2) const
         {
             return add(_n, _d, r2._n, r2._d);
