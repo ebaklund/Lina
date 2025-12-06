@@ -538,5 +538,21 @@ namespace LinaTests
             Assert::AreEqual(A == B, false);
             Assert::AreEqual(rref(A) == B, true);
         }
+        TEST_METHOD(MO_1_14)
+        {
+            Mtx<float, 3, 4> A({
+                2.f,  1.f,  0.f,  5.f,
+                3.f,  6.f,  1.f,  1.f,
+                5.f,  7.f,  1.f,  8.f,
+            });
+            Mtx<float, 3, 4> B({
+                1.f, 0.5f,     0.f,   5.f/2.f,
+                0.f,  1.f, 2.f/9.f, -13.f/9.f,
+                0.f,  0.f,     0.f,       1.f,
+            });           
+
+            Assert::AreEqual(A == B, false);
+            Assert::AreEqual(rref(A) == B, true);
+        }
     };
 }
