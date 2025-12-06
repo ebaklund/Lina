@@ -623,5 +623,17 @@ namespace LinaTests
 
             Assert::AreEqual(3, (int)rref(A).rank());
         }
+        TEST_METHOD(MO_1_17)
+        {
+            auto r = [](uint64_t n, uint64_t d = 1) { return Rational(n, d); };
+
+            Mtx<Rational, 3, 5> A({
+                r(3),  r(2), r(1), r(-4),  r(1),
+                r(2),  r(3), r(0), r(-1), r(-1),
+                r(1), r(-6), r(3), r(-8),  r(7),
+            });
+
+            Assert::AreEqual(2, (int)rref(A).rank());
+        }
     };
 }
