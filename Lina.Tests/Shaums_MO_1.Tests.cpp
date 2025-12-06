@@ -588,8 +588,9 @@ namespace LinaTests
             Assert::AreEqual(rref(A) == B, false);
             Assert::AreEqual(rref(A).to_string("") == C.to_string(""), true);
         }
-        TEST_METHOD(MO_1_15_rational)
+        TEST_METHOD(MO_1_15_relational)
         {
+            // The solution in the book is correct and that is proved by implementing the test with rational numbers.
             auto r = [](uint64_t n, uint64_t d = 1) { return Rational(n, d); };
 
             Mtx<Rational, 3, 5> A({
@@ -611,6 +612,16 @@ namespace LinaTests
             Assert::AreEqual(false, A == B);
             Assert::AreEqual(true, rref(A) == B);
             Assert::AreEqual(false, rref(A) == C);
+        }
+        TEST_METHOD(MO_1_16)
+        {
+            Mtx<float, 3, 4> A({
+                2.f,  1.f,  0.f,  5.f,
+                3.f,  6.f,  1.f,  1.f,
+                5.f,  7.f,  1.f,  8.f,
+            });
+
+            Assert::AreEqual(3, (int)rref(A).rank());
         }
     };
 }
