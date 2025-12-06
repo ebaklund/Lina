@@ -102,5 +102,20 @@ namespace LinaTests
             Assert::AreEqual(r(0, 2), r(1, 2) * r(0, 2));
             Assert::AreEqual(r(1, 4), r(1, 2) * r(1, 2));
         }
+        TEST_METHOD(t05_div)
+        {
+            auto r = Rational::from;
+            Assert::AreEqual(r(0, 1), r(0, -1) / r(1, -1));
+            Assert::AreEqual(r(1, 1), r(1, -1) / r(1, -1));
+
+            Assert::AreEqual(r(0, 1), r(0, 1) / r(1, -1));
+            Assert::AreEqual(r(-1, 1), r(1, 1) / r(1, -1));
+
+            Assert::AreEqual(r(0, 1), r(0, 1) / r(1, 1));
+            Assert::AreEqual(r(1, 1), r(1, 1) / r(1, 1));
+
+            Assert::AreEqual(r(0, 2), r(0, 2) / r(1, 2));
+            Assert::AreEqual(r(1, 1), r(1, 2) / r(1, 2));
+        }
     };
 }
