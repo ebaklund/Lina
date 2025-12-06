@@ -8,7 +8,6 @@
 using namespace Lina;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-
 namespace LinaTests
 {
 	TEST_CLASS(LinaTests)
@@ -634,6 +633,31 @@ namespace LinaTests
             });
 
             Assert::AreEqual(2, (int)rref(A).rank());
+        }
+        TEST_METHOD(MO_1_18)
+        {
+            auto r = [](uint64_t n, uint64_t d = 1) { return Rational(n, d); };
+
+            Mtx<Rational, 3, 4> A({
+                r(1), r(1,2),   r(0),   r(5,2),
+                r(0),  r(1),  r(2,9), r(-13,9),
+                r(0),  r(0),    r(0),     r(1),
+            });  
+            Mtx<Rational, 3, 4> B({
+                r(0),  r(1),  r(2,9), r(-13,9),
+                r(0),  r(0),    r(0),     r(0),
+                r(0),  r(0),    r(0),     r(0),
+            });  
+            Mtx<Rational, 3, 4> C({
+                r(1), r(3,2), r(2,9), r(19,18),
+                r(0),   r(1), r(2,9), r(-13,9),
+                r(0),   r(0),   r(0),     r(1),
+            });
+
+            Assert::AreEqual(true, C == (A + B));
+            Assert::AreEqual(true, A.is_rref());
+            Assert::AreEqual(true, B.is_rref());
+            Assert::AreEqual(true, C.is_rref());
         }
     };
 }
