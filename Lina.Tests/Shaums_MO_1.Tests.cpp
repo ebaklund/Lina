@@ -12,6 +12,10 @@ namespace LinaTests
 {
 	TEST_CLASS(LinaTests)
 	{
+        BEGIN_TEST_CLASS_ATTRIBUTE()
+            TEST_CLASS_ATTRIBUTE(L"Shaums_MO_1", L"Tests")
+        END_TEST_CLASS_ATTRIBUTE()
+
 	public:
         TEST_METHOD(MO_1_00)
         {
