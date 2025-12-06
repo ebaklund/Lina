@@ -60,6 +60,13 @@ namespace Lina
             }
         }
 
+        Rational mul(int64_t n1, int64_t d1, int64_t n2, int64_t d2) const
+        {
+            auto n = n1 * n2;
+            auto d = d1 * d2;
+            return Rational(n, d).reduce();
+        }
+
     public:
         Rational()
         { }
@@ -100,6 +107,15 @@ namespace Lina
         {
             return add(_n, _d, -r2._n, r2._d);
         }
-    };
 
+        Rational operator*(Rational r2) const
+        {
+            return mul(_n, _d, r2._n, r2._d);
+        }
+
+        Rational operator/(Rational r2) const
+        {
+            return mul(_n, _d, r2._d, r2._n);
+        }
+    };
 }
