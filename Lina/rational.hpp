@@ -113,9 +113,21 @@ namespace Lina
             return add(_n, _d, -r2._n, r2._d);
         }
 
+        Rational& operator-=(Rational r2)
+        {
+            *this = add(_n, _d, -r2._n, r2._d);
+            return *this;
+        }
+
         Rational operator*(Rational r2) const
         {
             return mul(_n, _d, r2._n, r2._d);
+        }
+
+        Rational& operator*=(Rational r2)
+        {
+            *this = mul(_n, _d, r2._n, r2._d);
+            return *this;
         }
 
         Rational operator/(Rational r2) const
