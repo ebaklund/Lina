@@ -29,7 +29,7 @@ namespace LinaTests
         END_TEST_CLASS_ATTRIBUTE()
 
     public:
-        TEST_METHOD(Constructor)
+        TEST_METHOD(t00_Constructor)
         {
             Rational a;
             Rational b(0, 0);
@@ -39,7 +39,7 @@ namespace LinaTests
             auto r = Rational::from;
             Rational e = r(1, 1);
         }
-        TEST_METHOD(eq)
+        TEST_METHOD(t01_eq)
         {
             auto r = Rational::from;
             Assert::AreEqual(r(0, 1), Rational());
@@ -47,6 +47,42 @@ namespace LinaTests
             Assert::AreEqual(r(0, 1), Rational(0, 1));
             Assert::AreEqual(r(1, 1), Rational(1));
             Assert::AreEqual(r(1, 1), Rational(1, 1));
+        }
+        TEST_METHOD(t02_add)
+        {
+            auto r = Rational::from;
+            Assert::AreEqual(r(0, -1) + r(0, -1), r(0, 1));
+            Assert::AreEqual(r(0, -1) + r(1, -1), r(-1, 1));
+            Assert::AreEqual(r(1, -1) + r(0, -1), r(-1, 1));
+            Assert::AreEqual(r(1, -1) + r(1, -1), r(-2, 1));
+
+            Assert::AreEqual(r(0, 1) + r(0, 1), r(0, 1));
+            Assert::AreEqual(r(0, 1) + r(1, 1), r(1, 1));
+            Assert::AreEqual(r(1, 1) + r(0, 1), r(1, 1));
+            Assert::AreEqual(r(1, 1) + r(1, 1), r(2, 1));
+
+            Assert::AreEqual(r(0, 2) + r(0, 2), r(0, 1));
+            Assert::AreEqual(r(0, 2) + r(1, 2), r(1, 2));
+            Assert::AreEqual(r(1, 2) + r(0, 2), r(1, 2));
+            Assert::AreEqual(r(1, 2) + r(1, 2), r(1, 1));
+        }
+        TEST_METHOD(t03_sub)
+        {
+            auto r = Rational::from;
+            Assert::AreEqual(r(0, 1), r(0, -1) - r(0, -1));
+            Assert::AreEqual(r(1, 1), r(0, -1) - r(1, -1));
+            Assert::AreEqual(r(-1, 1), r(1, -1) - r(0, -1));
+            Assert::AreEqual(r(0, 1), r(1, -1) - r(1, -1));
+
+            Assert::AreEqual(r(0, 1), r(0, 1) - r(0, 1));
+            Assert::AreEqual(r(-1, 1), r(0, 1) - r(1, 1));
+            Assert::AreEqual(r(1, 1), r(1, 1) - r(0, 1));
+            Assert::AreEqual(r(0, 1), r(1, 1) - r(1, 1));
+
+            Assert::AreEqual(r(0, 1), r(0, 2) - r(0, 2));
+            Assert::AreEqual(r(-1, 2), r(0, 2) - r(1, 2));
+            Assert::AreEqual(r(1, 2), r(1, 2) - r(0, 2));
+            Assert::AreEqual(r(0, 1), r(1, 2) - r(1, 2));
         }
     };
 }
