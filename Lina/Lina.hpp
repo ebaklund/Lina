@@ -4,6 +4,7 @@
 #include <array>
 #include <memory>
 #include <format>
+#include <cmath>
 #include "Mtx.hpp"
 #include "RrefMtx.hpp"
 
@@ -254,6 +255,33 @@ namespace Lina
             }
 
             p++;
+        }
+
+        return m;
+    }
+
+    template <typename T, uint32_t R, uint32_t C>
+    Mtx<T, 1, C> softmax(Mtx<T, R, C> const& m1)
+    {
+        Mtx<T, 1, C> m;
+        const T* p = (T*)m.data().data();
+        const T* p_end = p + R*C;
+        const T* p1_bol = m1.data().data();
+        const T* p1;
+
+        while (p < p_end)
+        {
+            T sum_exp = T(0);
+            const T* p1_eol = p1_bol + R;
+            for (p1 = p1_bol; p1 < p1_eol; p1++)
+            {
+                sum_exp += std::exp(*p1);
+            }
+            for (p1 = p1_bol; p1 < p1_eol; p1++)
+            {
+                *(p++) = std::exp(*p1) / sum_exp;
+            }
+            p1_bol += R;
         }
 
         return m;
