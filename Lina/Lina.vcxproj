@@ -80,7 +80,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;LINA_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-	  <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -97,7 +97,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;LINA_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-	  <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>NDEBUG;LINA_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-	  <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +141,7 @@
     <None Include="Lina.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.hpp" />
     <ClInclude Include="gje.hpp" />
     <ClInclude Include="Mtx.hpp" />
     <ClInclude Include="rational.hpp" />
