@@ -64,20 +64,15 @@ namespace Lina
         return m;
     }
 
-    template <typename U, uint32_t S>
-    U dot(std::array<U, S> const& a1, std::array<U, S> const& a2)
+    template <typename T, uint32_t N>
+    T dot(const T* p1, const T* p2)
     {
-        U d = U(0);
-        U const* p1 = a1.data();
-        U const* p1_end = p1 + S;
-        U const* p2 = a2.data();
+        T dot = T(0);
 
-        while (p1 < p1_end)
-        {
-            d += (*p1++) * (*p2++);
-        }
+        for (int i = 0; i < N; ++i)
+            dot += p1[i] * p2[i];
 
-        return d;
+        return dot;
     }
 
     template <typename T, uint32_t C>
@@ -89,7 +84,7 @@ namespace Lina
     template <typename T, uint32_t R>
     T dot(Mtx<T, R, 1> const& m1, Mtx<T, R, 1> const& m2)
     {
-        return dot(m1.data(), m2.data());
+        return dot<T,R>(m1.data().data(), m2.data().data());
     }
 
     template <typename T, uint32_t R, uint32_t C>

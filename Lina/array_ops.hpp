@@ -4,6 +4,7 @@
 #include <array>
 #include <memory>
 #include <format>
+#include "buffer_ops.hpp"
 
 namespace Lina
 {
@@ -23,5 +24,11 @@ namespace Lina
 
         s += "]\n";
         return s;
+    }
+
+    template <typename T, uint32_t N>
+    T dot(std::array<T, N> const& a1, std::array<T, N> const& a2)
+    {
+        return dot<T,N>(a1.data(), a2.data());
     }
 }

@@ -141,7 +141,8 @@
     <None Include="Lina.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Array.hpp" />
+    <ClInclude Include="array_ops.hpp" />
+    <ClInclude Include="buffer_ops.hpp" />
     <ClInclude Include="gje.hpp" />
     <ClInclude Include="Mtx.hpp" />
     <ClInclude Include="rational.hpp" />

@@ -6,7 +6,9 @@
 #include <cstdlib>
 #include <array>
 #include <algorithm>
-#include "Array.hpp"
+#include "array_ops.hpp"
+#include "buffer_ops.hpp"
+#include "Transformer.hpp"
 
 using namespace Lina;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -20,6 +22,14 @@ namespace TransformersTests
         END_TEST_CLASS_ATTRIBUTE()
 
     private:
+        std::generator<uint32_t> gen_rnd(uint32_t seed)
+        {
+            srand(seed);
+
+            while (true)
+                co_yield rand();
+        }
+
         template<uint32_t Q>
         std::generator<uint32_t> rnd_mod(uint32_t seed)
         {
@@ -80,5 +90,32 @@ namespace TransformersTests
             actual = to_string("", AsEmbedding<N>(3));
             Assert::AreEqual(expected, actual);
 		}
+
+        TEST_METHOD(learn_mod4)
+		{
+            const auto is_expected = 1.f;
+            const auto modulo = 4u;
+            const auto N = modulo + 1;
+            auto trf = Transformer<float,N,N>();
+            const auto  modulo_emb = AsEmbedding<N>(modulo);
+            int i = 10;
+
+            for (auto dividend : gen_rnd(99))
+            {
+                auto expected = dividend % modulo; // Remainder
+
+                if ((i--) == 0)
+                    break;
+
+                auto  dividend_emb = AsEmbedding<N>(dividend);
+                auto expected_emb = AsEmbedding<N>(expected);
+                expected_emb[N - 1] = is_expected;
+
+                trf.get_next(dividend_emb);
+                auto prediction_emb = trf.get_next(modulo_emb);
+                auto score = dot<float,N>(expected_emb, prediction_emb);
+                trf.learn_from(score);
+            }
+        }
 	};
 }
