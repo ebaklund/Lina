@@ -31,4 +31,10 @@ namespace Lina
     {
         return dot<T,N>(a1.data(), a2.data());
     }
+
+    template <typename T, uint32_t N>
+    T sin(std::array<T, N> const& a1, std::array<T, N> const& a2)
+    {
+        return sin<T,N>(a1.data(), a2.data());
+    }
 }

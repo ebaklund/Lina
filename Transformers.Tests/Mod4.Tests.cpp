@@ -22,12 +22,13 @@ namespace TransformersTests
         END_TEST_CLASS_ATTRIBUTE()
 
     private:
+        template<uint32_t N>
         std::generator<uint32_t> gen_rnd(uint32_t seed)
         {
             srand(seed);
 
             while (true)
-                co_yield rand();
+                co_yield rand() % N;
         }
 
         template<uint32_t Q>
@@ -42,13 +43,10 @@ namespace TransformersTests
         }
 
         template<uint32_t N>
-        std::array<float,N> AsEmbedding(uint32_t v)
+        void embed_value(std::array<float,N>& emb, uint32_t v)
         {
-            std::array<float,N> embedding { };
-            std::ranges::fill(embedding, 0.0); 
-            embedding[v] = 1.0;
-
-            return embedding;
+            std::ranges::fill(emb, 0.0); 
+            emb[v] = 1.0;
         }
 
 	public:		
@@ -73,49 +71,66 @@ namespace TransformersTests
 		TEST_METHOD(rnd_mod_emb)
 		{
             const uint32_t N = 4;
+            std::array<float,N> embedding;
 
+            embed_value<N>(embedding, 0u);
+            auto actual = to_string("",embedding);
             auto expected = to_string("", std::array<float, N> {1.f, 0.f, 0.f, 0.f});
-            auto actual = to_string("", AsEmbedding<N>(0));
             Assert::AreEqual(expected, actual);
 
+            embed_value<N>(embedding, 1u);
+            actual = to_string("",embedding);
             expected = to_string("", std::array<float, N> {0.f, 1.f, 0.f, 0.f});
-            actual = to_string("", AsEmbedding<N>(1));
             Assert::AreEqual(expected, actual);
 
+            embed_value<N>(embedding, 2u);
+            actual = to_string("",embedding); 
             expected = to_string("", std::array<float, N> {0.f, 0.f, 1.f, 0.f});
-            actual = to_string("", AsEmbedding<N>(2));
             Assert::AreEqual(expected, actual);
 
+            embed_value<N>(embedding, 3u);
+            actual = to_string("",embedding);
             expected = to_string("", std::array<float, N> {0.f, 0.f, 0.f, 1.f});
-            actual = to_string("", AsEmbedding<N>(3));
             Assert::AreEqual(expected, actual);
 		}
 
         TEST_METHOD(learn_mod4)
 		{
-            const auto is_expected = 1.f;
-            const auto modulo = 4u;
-            const auto N = modulo + 1;
-            auto trf = Transformer<float,N,N>();
-            const auto  modulo_emb = AsEmbedding<N>(modulo);
+            const float is_expected = 1.f;
+            const uint32_t divisor  = 4u;
+            const uint32_t N        = 64u;
+
+            Transformer<float,N,N> trf;
+            std::array<float,N> dividend_token;
+            std::array<float,N> divisor_token;
+            std::array<float,N> requester_token;
+            std::array<float,N> expected_token;
+
+            embed_value<N>(divisor_token, divisor);
+            std::ranges::fill(requester_token, 1.f);
+
             int i = 10;
 
-            for (auto dividend : gen_rnd(99))
+            for (auto dividend : gen_rnd<N>(2))
             {
-                auto expected = dividend % modulo; // Remainder
-
                 if ((i--) == 0)
                     break;
+             
+                auto expected_remainder = dividend % divisor; 
+                embed_value<N>(dividend_token, dividend);
+                embed_value<N>(expected_token, expected_remainder);
 
-                auto  dividend_emb = AsEmbedding<N>(dividend);
-                auto expected_emb = AsEmbedding<N>(expected);
-                expected_emb[N - 1] = is_expected;
-
-                trf.get_next(dividend_emb);
-                auto prediction_emb = trf.get_next(modulo_emb);
-                auto score = dot<float,N>(expected_emb, prediction_emb);
+                trf.get_next(dividend_token);
+                trf.get_next(divisor_token);
+                auto predicted_token = trf.get_next(requester_token);
+                auto score = sin<float,N>(expected_token, predicted_token);
                 trf.learn_from(score);
+
+                std::wstring message = L"Score: " + std::to_wstring(score);
+                Logger::WriteMessage(message.c_str());
             }
+
+            Assert::AreEqual(true, false);
         }
 	};
 }
