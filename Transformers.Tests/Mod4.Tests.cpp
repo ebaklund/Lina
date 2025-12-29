@@ -45,7 +45,7 @@ namespace TransformersTests
         template<uint32_t N>
         void embed_value(std::array<float,N>& emb, uint32_t v)
         {
-            std::ranges::fill(emb, 0.0); 
+            std::ranges::fill(emb, 0.f); 
             emb[v] = 1.0;
         }
 
@@ -70,27 +70,27 @@ namespace TransformersTests
 
 		TEST_METHOD(rnd_mod_emb)
 		{
-            const uint32_t N = 4;
-            std::array<float,N> embedding;
+            const uint32_t Dim = 4;
+            std::array<float,Dim> embedding;
 
-            embed_value<N>(embedding, 0u);
+            embed_value<Dim>(embedding, 0u);
             auto actual = to_string("",embedding);
-            auto expected = to_string("", std::array<float, N> {1.f, 0.f, 0.f, 0.f});
+            auto expected = to_string("", std::array<float, Dim> {1.f, 0.f, 0.f, 0.f});
             Assert::AreEqual(expected, actual);
 
-            embed_value<N>(embedding, 1u);
+            embed_value<Dim>(embedding, 1u);
             actual = to_string("",embedding);
-            expected = to_string("", std::array<float, N> {0.f, 1.f, 0.f, 0.f});
+            expected = to_string("", std::array<float, Dim> {0.f, 1.f, 0.f, 0.f});
             Assert::AreEqual(expected, actual);
 
-            embed_value<N>(embedding, 2u);
+            embed_value<Dim>(embedding, 2u);
             actual = to_string("",embedding); 
-            expected = to_string("", std::array<float, N> {0.f, 0.f, 1.f, 0.f});
+            expected = to_string("", std::array<float, Dim> {0.f, 0.f, 1.f, 0.f});
             Assert::AreEqual(expected, actual);
 
-            embed_value<N>(embedding, 3u);
+            embed_value<Dim>(embedding, 3u);
             actual = to_string("",embedding);
-            expected = to_string("", std::array<float, N> {0.f, 0.f, 0.f, 1.f});
+            expected = to_string("", std::array<float, Dim> {0.f, 0.f, 0.f, 1.f});
             Assert::AreEqual(expected, actual);
 		}
 
@@ -98,32 +98,32 @@ namespace TransformersTests
 		{
             const float is_expected = 1.f;
             const uint32_t divisor  = 4u;
-            const uint32_t N        = 64u;
+            const uint32_t Dim      = 64u;
 
-            Transformer<float,N,N> trf;
-            std::array<float,N> dividend_token;
-            std::array<float,N> divisor_token;
-            std::array<float,N> requester_token;
-            std::array<float,N> expected_token;
+            Transformer<float,Dim,Dim> trf;
+            std::array<float,Dim> dividend_token;
+            std::array<float,Dim> divisor_token;
+            std::array<float,Dim> requester_token;
+            std::array<float,Dim> expected_token;
 
-            embed_value<N>(divisor_token, divisor);
+            embed_value<Dim>(divisor_token, divisor);
             std::ranges::fill(requester_token, 1.f);
 
             int i = 10;
 
-            for (auto dividend : gen_rnd<N>(2))
+            for (auto dividend : gen_rnd<Dim>(2))
             {
                 if ((i--) == 0)
                     break;
              
                 auto expected_remainder = dividend % divisor; 
-                embed_value<N>(dividend_token, dividend);
-                embed_value<N>(expected_token, expected_remainder);
+                embed_value<Dim>(dividend_token, dividend);
+                embed_value<Dim>(expected_token, expected_remainder);
 
                 trf.get_next(dividend_token);
                 trf.get_next(divisor_token);
                 auto predicted_token = trf.get_next(requester_token);
-                auto score = sin<float,N>(expected_token, predicted_token);
+                float score = 1.f - nml1_dist<float,Dim>(expected_token, predicted_token);
                 trf.learn_from(score);
 
                 std::wstring message = L"Score: " + std::to_wstring(score);

@@ -7,6 +7,7 @@
 #include <cmath>
 #include "Mtx.hpp"
 #include "RrefMtx.hpp"
+#include "buffer_ops.hpp"
 
 namespace Lina
 {
@@ -62,17 +63,6 @@ namespace Lina
         }
 
         return m;
-    }
-
-    template <typename T, uint32_t N>
-    T dot(const T* p1, const T* p2)
-    {
-        T dot = T(0);
-
-        for (int i = 0; i < N; ++i)
-            dot += p1[i] * p2[i];
-
-        return dot;
     }
 
     template <typename T, uint32_t C>

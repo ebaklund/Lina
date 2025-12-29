@@ -41,16 +41,19 @@ namespace Lina
         }
     }
 
-    template<typename T, uint32_t N>
-    T sin(const T* p1, const T* p2)
+    template<typename T, uint32_t Dim>
+    T nml1_dist(const T* p1, const T* p2)
     {
-        std::array<T,N> n1;
-        std::array<T,N> n2;
+        // Normalized manhatten L1 distance (NML1D)
+        // https://bib.dbvis.de/uploadedFiles/155.pdf
+        // https://cs.brown.edu/~aritz/files/SDMpresentation.pdf
 
-        normalize<T,N>(n1.data(), p1);
-        normalize<T,N>(n2.data(), p2);
+        T nmd_dist = T(0);
 
-        T sin = T(1) - dot<T,N>(n1.data(), n2.data());
-        return sin;
+        for (int i = 0; i < Dim; ++i)
+            nmd_dist += abs(p1[i] - p2[i]);
+
+        nmd_dist /= Dim;
+        return nmd_dist;
     }
 }

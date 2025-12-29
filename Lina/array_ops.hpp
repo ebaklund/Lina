@@ -26,15 +26,15 @@ namespace Lina
         return s;
     }
 
-    template <typename T, uint32_t N>
-    T dot(std::array<T, N> const& a1, std::array<T, N> const& a2)
+    template <typename T, uint32_t Dim>
+    T dot(std::array<T, Dim> const& a1, std::array<T, Dim> const& a2)
     {
-        return dot<T,N>(a1.data(), a2.data());
+        return dot<T,Dim>(a1.data(), a2.data());
     }
 
-    template <typename T, uint32_t N>
-    T sin(std::array<T, N> const& a1, std::array<T, N> const& a2)
+    template <typename T, uint32_t Dim>
+    T nml1_dist(std::array<T, Dim> const& a1, std::array<T, Dim> const& a2)
     {
-        return sin<T,N>(a1.data(), a2.data());
+        return nml1_dist<T,Dim>(a1.data(), a2.data());
     }
 }
