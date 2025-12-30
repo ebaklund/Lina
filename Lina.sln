@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Hierachy Of Knowledge.md = Hierachy Of Knowledge.md
+		.runsettings = .runsettings
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Modal", "Modal\Modal.vcxproj", "{FA8E224A-DBEA-4E61-8925-D24CFF522A92}"
@@ -24,6 +25,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transformers", "Transformers\Transformers.vcxproj", "{75018071-6A93-420F-AE67-EDA20D89708B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Transformers.Tests", "Transformers.Tests\Transformers.Tests.vcxproj", "{68037606-78BD-91EB-B82D-218356162346}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A71F7BE9-B947-4D31-90C8-DA888BA9123D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5B35A0E0-81A5-4CFB-BBE2-9383E60D1DD4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "catch2", "catch2\catch2.vcxproj", "{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,9 +104,27 @@ Global
 		{68037606-78BD-91EB-B82D-218356162346}.Release|x64.Build.0 = Release|x64
 		{68037606-78BD-91EB-B82D-218356162346}.Release|x86.ActiveCfg = Release|Win32
 		{68037606-78BD-91EB-B82D-218356162346}.Release|x86.Build.0 = Release|Win32
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Debug|x64.ActiveCfg = Debug|x64
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Debug|x64.Build.0 = Debug|x64
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Debug|x86.ActiveCfg = Debug|Win32
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Debug|x86.Build.0 = Debug|Win32
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Release|x64.ActiveCfg = Release|x64
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Release|x64.Build.0 = Release|x64
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Release|x86.ActiveCfg = Release|Win32
+		{F1FBFDAE-5EC5-4F5A-8A81-478BA86A9606}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9487239-BAD2-4933-B574-88FAC8F36914} = {A71F7BE9-B947-4D31-90C8-DA888BA9123D}
+		{CB72BDC4-FCA2-1F6F-0D59-B249B935CACA} = {5B35A0E0-81A5-4CFB-BBE2-9383E60D1DD4}
+		{FA8E224A-DBEA-4E61-8925-D24CFF522A92} = {A71F7BE9-B947-4D31-90C8-DA888BA9123D}
+		{06E45C22-9B3B-4AAB-BC24-8346ED986892} = {5B35A0E0-81A5-4CFB-BBE2-9383E60D1DD4}
+		{B4FFFE52-1774-4E8C-8388-D5121D5CA87F} = {A71F7BE9-B947-4D31-90C8-DA888BA9123D}
+		{8F903CDB-DECD-D0AE-560A-293121EC8D74} = {5B35A0E0-81A5-4CFB-BBE2-9383E60D1DD4}
+		{75018071-6A93-420F-AE67-EDA20D89708B} = {A71F7BE9-B947-4D31-90C8-DA888BA9123D}
+		{68037606-78BD-91EB-B82D-218356162346} = {5B35A0E0-81A5-4CFB-BBE2-9383E60D1DD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8C88B462-ADB0-4CE0-99BC-D9960DB1EE86}

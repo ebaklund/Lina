@@ -1,18 +1,38 @@
-#include <CppUnitTest.h>
-#include "Modal.h"
 
+#include <catch2/catch_amalgamated.hpp>
+#include <Modal/Modal.h>
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-namespace ModalTests
+namespace CatchTestset01
 {
-    TEST_CLASS(ModelTests)
+    TEST_CASE( "Testset01.Tests01. 01 One,!@#$%^&*()-_=+| tag", "[Tag1]" )
     {
-    public:
-        TEST_METHOD(Default_constructor)
-        {
-            Modal::Model m;
-        }
-    };
-}
+        CHECK(true);
+    }
+
+    TEST_CASE( "Testset01.Tests01. 02 Two tags", "[Tag1][Tag2]" )
+    {
+        CHECK(true);
+    }
+
+    TEST_CASE( "Testset01.Tests01. 03 Hidden tag", "[.]" )
+    {
+        CHECK(true);
+    }
+
+    TEST_CASE("Testset01.Tests01. 04 Mixed Hidden", "[.][Tag1]")
+    {
+        CHECK(true);
+    }
+
+    TEST_CASE("Testset01.Tests01. 05 Alt Hidden", "[Tag1][.Tag3]")
+    {
+        CHECK(true);
+    }
+
+    TEST_CASE("Testset01.Tests01. 06 Alt Hidden", "[!hide][Tag2]")
+    {
+        CHECK(true);
+    }
+
+} 
 

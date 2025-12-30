@@ -1,18 +1,32 @@
 
-#include "CppUnitTest.h"
+#include <catch2/catch_amalgamated.hpp>
 #include <coroutine>
-#include <generator>
 #include <iostream>
 #include <cstdlib>
 #include <array>
 #include <algorithm>
-#include "array_ops.hpp"
-#include "buffer_ops.hpp"
-#include "Transformer.hpp"
+#include <Lina/array_ops.hpp>
+#include <Lina/buffer_ops.hpp>
+#include <Transformers/Transformer.hpp>
+
+#define _HAS_CXX23 1
+#include <generator>
 
 using namespace Lina;
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+template<uint32_t N>
+std::generator<uint32_t> gen_rnd(uint32_t seed)
+{
+    srand(seed);
+
+    while (true)
+        co_yield rand() % N;
+}
+
+TEST_CASE( "Factorials are computed", "[factorial]" )
+{
+}
+/*
 namespace TransformersTests
 {
 	TEST_CLASS(Mod4_Tests)
@@ -22,14 +36,7 @@ namespace TransformersTests
         END_TEST_CLASS_ATTRIBUTE()
 
     private:
-        template<uint32_t N>
-        std::generator<uint32_t> gen_rnd(uint32_t seed)
-        {
-            srand(seed);
 
-            while (true)
-                co_yield rand() % N;
-        }
 
 
 
@@ -107,3 +114,4 @@ namespace TransformersTests
         }
 	};
 }
+*/

@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>  
 #include <array>  
-#include <buffer_ops.hpp>  
+#include <Lina/buffer_ops.hpp>  
 
 namespace Lina
 {

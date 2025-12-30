@@ -1,18 +1,8 @@
-#include <CppUnitTest.h>
-#include "Modal.h"
 
+#include <catch2/catch_amalgamated.hpp>
+#include <Modal/Modal.h>
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-namespace ModalTests
+TEST_CASE( "Factorials are computed", "[factorial]" )
 {
-    TEST_CLASS(StateTests)
-    {
-    public:
-        TEST_METHOD(Default_constructor)
-        {
-            Modal::State<float, 10> s;
-        }
-    };
+    Modal::State<float, 10> s;
 }
-
