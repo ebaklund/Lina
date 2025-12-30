@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>  
 #include <array>  
+#include <buffer_ops.hpp>  
 
 namespace Lina
 {
@@ -9,9 +10,11 @@ namespace Lina
     {
     private:
     public:
-        std::array<T,N_out> get_next(std::array<T,N_in> input)
+        template<typename T, uint32_t Dim>
+        std::array<T,Dim> get_next(std::array<T,Dim> input)
         {
             std::array<T,N_out> output;
+            randomize<T,Dim>(output);
 
             return output;
         }

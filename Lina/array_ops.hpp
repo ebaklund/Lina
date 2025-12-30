@@ -25,6 +25,12 @@ namespace Lina
         s += "]\n";
         return s;
     }
+    
+    template<typename T, uint32_t Dim>
+    void randomize(std::array<T, Dim>& a1)
+    {
+        return randomize<T,Dim>(a1.data());
+    }
 
     template <typename T, uint32_t Dim>
     T dot(std::array<T, Dim> const& a1, std::array<T, Dim> const& a2)

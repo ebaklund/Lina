@@ -31,16 +31,7 @@ namespace TransformersTests
                 co_yield rand() % N;
         }
 
-        template<uint32_t Q>
-        std::generator<uint32_t> rnd_mod(uint32_t seed)
-        {
-            srand(seed);
 
-            while (true)
-            {
-                co_yield rand() % Q;
-            }
-        }
 
         template<uint32_t N>
         void embed_value(std::array<float,N>& emb, uint32_t v)
@@ -50,25 +41,7 @@ namespace TransformersTests
         }
 
 	public:		
-		TEST_METHOD(rnd_mod)
-		{
-            auto gen_mod_4 = rnd_mod<4>(99);
-            auto it = gen_mod_4.begin();
-            
-            while(*(++it) != 0u);
-            Assert::AreEqual(*it, 0u);
-            
-            while(*(++it) != 2u);
-            Assert::AreEqual(*it, 2u);
-            
-            while(*(++it) != 1u);
-            Assert::AreEqual(*it, 1u);
-            
-            while(*(++it) != 3u);
-            Assert::AreEqual(*it, 3u);
-		}
-
-		TEST_METHOD(rnd_mod_emb)
+		TEST_METHOD(can_embed_value)
 		{
             const uint32_t Dim = 4;
             std::array<float,Dim> embedding;
@@ -94,7 +67,7 @@ namespace TransformersTests
             Assert::AreEqual(expected, actual);
 		}
 
-        TEST_METHOD(learn_mod4)
+        TEST_METHOD(can_learn_mod4)
 		{
             const float is_expected = 1.f;
             const uint32_t divisor  = 4u;
@@ -122,8 +95,8 @@ namespace TransformersTests
 
                 trf.get_next(dividend_token);
                 trf.get_next(divisor_token);
-                auto predicted_token = trf.get_next(requester_token);
-                float score = 1.f - nml1_dist<float,Dim>(expected_token, predicted_token);
+                auto remainder_token = trf.get_next(requester_token);
+                float score = 2.f * (0.5f - nml1_dist<float,Dim>(expected_token, remainder_token));
                 trf.learn_from(score);
 
                 std::wstring message = L"Score: " + std::to_wstring(score);

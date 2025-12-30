@@ -3,12 +3,21 @@
 
 namespace Lina
 {
-    template<typename T, uint32_t N>
+    template<typename T, uint32_t Dim>
+    void randomize(T* p1)
+    {
+        double q = double(RAND_MAX);
+
+        for(uint32_t i = 0; i < Dim; ++i)
+            p1[i] = T(double(rand())/q);
+    }
+
+    template<typename T, uint32_t Dim>
     T dot(const T* p1, const T* p2)
     {
         auto dot = T(0);
 
-        for(uint32_t i = 0; i < N; ++i)
+        for(uint32_t i = 0; i < Dim; ++i)
         {
             dot += p1[i] * p2[i];
         }
@@ -16,12 +25,12 @@ namespace Lina
         return dot;
     }
 
-    template<typename T, uint32_t N>
+    template<typename T, uint32_t Dim>
     T length(const T* p1)
     {
         auto sqr_sum = T(0);
 
-        for(uint32_t i = 0; i < N; ++i)
+        for(uint32_t i = 0; i < Dim; ++i)
         {
             sqr_sum += p1[i] * p1[i];
         }
@@ -30,12 +39,12 @@ namespace Lina
         return length;
     }
 
-    template<typename T, uint32_t N>
+    template<typename T, uint32_t Dim>
     void normalize(T* p1, const T* p2)
     {
-        T length2 = length<T,N>(p2);
+        T length2 = length<T,Dim>(p2);
 
-        for(uint32_t i = 0; i < N; ++i)
+        for(uint32_t i = 0; i < Dim; ++i)
         {
             p1[i] = p2[i] / length2;
         }
