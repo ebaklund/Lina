@@ -1,38 +1,13 @@
 
-#include <catch2/catch_amalgamated.hpp>
+
 #include <Modal/Modal.h>
 
-namespace CatchTestset01
-{
-    TEST_CASE( "Testset01.Tests01. 01 One,!@#$%^&*()-_=+| tag", "[Tag1]" )
-    {
-        CHECK(true);
-    }
+int factorial(int number) { return number <= 1 ? number : factorial(number - 1) * number; }
 
-    TEST_CASE( "Testset01.Tests01. 02 Two tags", "[Tag1][Tag2]" )
-    {
-        CHECK(true);
-    }
-
-    TEST_CASE( "Testset01.Tests01. 03 Hidden tag", "[.]" )
-    {
-        CHECK(true);
-    }
-
-    TEST_CASE("Testset01.Tests01. 04 Mixed Hidden", "[.][Tag1]")
-    {
-        CHECK(true);
-    }
-
-    TEST_CASE("Testset01.Tests01. 05 Alt Hidden", "[Tag1][.Tag3]")
-    {
-        CHECK(true);
-    }
-
-    TEST_CASE("Testset01.Tests01. 06 Alt Hidden", "[!hide][Tag2]")
-    {
-        CHECK(true);
-    }
-
-} 
-
+//TEST_CASE("testing the factorial function") {
+//    CHECK(factorial(1) == 1);
+//    CHECK(factorial(2) == 2);
+//    CHECK(factorial(3) == 6);
+//    CHECK(factorial(10) == 3628800);
+//}
+////

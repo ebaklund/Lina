@@ -22,11 +22,6 @@
     <ClCompile Include="Model.Tests.cpp" />
     <ClCompile Include="State.Tests.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\catch2\catch2.vcxproj">
-      <Project>{f1fbfdae-5ec5-4f5a-8a81-478ba86a9606}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

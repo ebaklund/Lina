@@ -1,5 +1,4 @@
 
-#include <catch2/catch_amalgamated.hpp>
 #include <coroutine>
 #include <iostream>
 #include <cstdlib>
@@ -23,9 +22,10 @@ std::generator<uint32_t> gen_rnd(uint32_t seed)
         co_yield rand() % N;
 }
 
-TEST_CASE( "Factorials are computed", "[factorial]" )
-{
-}
+//TEST_CASE( "Factorials are computed")
+//{
+//    CHECK(1 == 1);
+//}
 /*
 namespace TransformersTests
 {
