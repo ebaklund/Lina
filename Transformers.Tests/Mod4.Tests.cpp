@@ -1,4 +1,5 @@
 
+#include <CppUnitTest.h>
 #include <coroutine>
 #include <iostream>
 #include <cstdlib>
@@ -12,6 +13,7 @@
 #include <generator>
 
 using namespace Lina;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 template<uint32_t N>
 std::generator<uint32_t> gen_rnd(uint32_t seed)
@@ -22,11 +24,6 @@ std::generator<uint32_t> gen_rnd(uint32_t seed)
         co_yield rand() % N;
 }
 
-//TEST_CASE( "Factorials are computed")
-//{
-//    CHECK(1 == 1);
-//}
-/*
 namespace TransformersTests
 {
 	TEST_CLASS(Mod4_Tests)
@@ -114,4 +111,3 @@ namespace TransformersTests
         }
 	};
 }
-*/

@@ -1,6 +1,6 @@
 
 #include <CppUnitTest.h>
-#include <exception>
+//#include <exception>
 #include "Lina.hpp"
 #include "rational.hpp"
 
