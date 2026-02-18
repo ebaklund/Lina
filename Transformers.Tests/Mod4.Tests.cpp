@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <Lina/array_ops.hpp>
 #include <Lina/buffer_ops.hpp>
+#include <Lina/Mtx.hpp>
+#include <Lina/Lina.hpp>
 #include <Transformers/Transformer.hpp>
 
 #define _HAS_CXX23 1
@@ -77,6 +79,7 @@ namespace TransformersTests
             const uint32_t divisor  = 4u;
             const uint32_t Dim      = 64u;
 
+            // M = A % B
             Transformer<float,Dim,Dim> trf;
             std::array<float,Dim> dividend_token;
             std::array<float,Dim> divisor_token;
@@ -103,11 +106,54 @@ namespace TransformersTests
                 float score = 2.f * (0.5f - nml1_dist<float,Dim>(expected_token, remainder_token));
                 trf.learn_from(score);
 
-                std::wstring message = L"Score: " + std::to_wstring(score);
+                std::wstring message = L"\nScore: " + std::to_wstring(score);
                 Logger::WriteMessage(message.c_str());
             }
 
             Assert::AreEqual(true, false);
+        }
+
+        TEST_METHOD(learn_mod4_FFNN)
+		{
+            // r = x % y;
+            // X = embed_vaalue(x);
+            // Y = embed_vaalue(y);
+            // E = embed_vaalue(r);
+            // R = [X, Y] * L;
+
+            const uint32_t Dim = 64u;            
+            Mtx<float,1u,Dim> X;
+            Mtx<float,1u,Dim> Y;
+            Mtx<float,1u,Dim> E;
+            Mtx<float,1u,Dim+Dim> XY;
+
+            Mtx<float,Dim+Dim,Dim> M;
+            M.randomize();
+
+            auto         rnd_x = gen_rnd<Dim>(2).begin();
+            const uint32_t   y = 4u;
+
+            embed_value<Dim>(Y.mdata(), y);
+            std::copy(Y.data().data(), Y.data().data() + Dim, XY.mdata().data() + Dim);
+
+            for (int i = 10; i > 0; i--)
+            {
+                uint32_t x = rand() % Dim;
+                auto r = x % y;
+
+                embed_value<Dim>(X.mdata(), x);
+                embed_value<Dim>(E.mdata(), r);
+
+                std::copy(X.data().data(), X.data().data() + Dim, XY.mdata().data());
+
+                //Mtx<float,1u,Dim> R = XY * M;
+                Mtx<float,1u,Dim> R = XY * M;
+                R *= (1.f/(Dim+Dim));
+
+                float score = 2.f * (0.5f - nml1_dist<float,Dim>(E.data(), R.data()));
+                std::wstring message = L"\nScore: " + std::to_wstring(score);
+                Logger::WriteMessage(message.c_str());
+            }
         }
 	};
 }

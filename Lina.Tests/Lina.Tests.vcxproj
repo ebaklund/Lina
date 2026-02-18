@@ -168,6 +168,7 @@
     <ClCompile Include="buffer_ops.Tests.cpp" />
     <ClCompile Include="rational.tests.cpp" />
     <ClCompile Include="Shaums_MO_1.Tests.cpp" />
+    <ClCompile Include="universal_binary_function.Tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

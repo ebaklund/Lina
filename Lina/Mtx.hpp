@@ -5,6 +5,7 @@
 #include <memory>
 #include <format>
 #include "gje.hpp"
+#include "array_ops.hpp"
 
 namespace Lina
 {
@@ -38,7 +39,17 @@ namespace Lina
             }
         }
 
+        void randomize()
+        {
+            Lina::randomize(*_data);
+        }
+
         std::array<T, R*C> const& data() const
+        {
+            return *_data;
+        }
+
+        std::array<T, R*C> & mdata() const
         {
             return *_data;
         }
@@ -94,6 +105,11 @@ namespace Lina
         bool is_rref()
         {
             return Lina::is_rref<T, R, C>(*_data);
+        }
+
+        void operator*=(T x)
+        {
+            (*_data) *= x;
         }
     };
 }

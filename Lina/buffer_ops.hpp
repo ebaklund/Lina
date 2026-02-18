@@ -60,7 +60,12 @@ namespace Lina
         T nmd_dist = T(0);
 
         for (int i = 0; i < Dim; ++i)
-            nmd_dist += abs(p1[i] - p2[i]);
+        {
+            T a = p1[i];
+            T b = p2[i];
+            T d = abs(a - b);
+            nmd_dist += d;
+        }
 
         nmd_dist /= Dim;
         return nmd_dist;

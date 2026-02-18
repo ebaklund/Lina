@@ -43,4 +43,14 @@ namespace Lina
     {
         return nml1_dist<T,Dim>(a1.data(), a2.data());
     }
+
+    template <typename T, uint32_t Dim>
+    void operator*=(std::array<T, Dim>& a, T x)
+    {
+        const T* p_end = a.data() + Dim;
+        for(T* p = a.data(); p < p_end; ++p)
+        {
+            *p *= x;
+        }
+    }
 }

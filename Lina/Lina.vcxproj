@@ -153,6 +153,7 @@
     <ClInclude Include="Mtx.hpp" />
     <ClInclude Include="rational.hpp" />
     <ClInclude Include="RrefMtx.hpp" />
+    <ClInclude Include="universal_binary_function.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
