@@ -36,9 +36,6 @@ namespace TransformersTests
 
     private:
 
-
-
-
         template<uint32_t N>
         void embed_value(std::array<float,N>& emb, uint32_t v)
         {
